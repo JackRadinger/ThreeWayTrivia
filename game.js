@@ -1,10 +1,15 @@
-import {getClue as getClueFromPromise} from './promise-version.js'
-import {getClue as getClueFromAsyncFunction} from './async-await-version.js'
+import {getClue as getClueFromPromise, deleteClue as deleteClueFromPromise} from './promise-version.js'
+import {getClue as getClueFromAsyncFunction, deleteClue as deleteClueFromAsyncFunction} from './async-await-version.js'
 import {getClue as getClueFromCallback} from './callback-version.js'
 
-let score = 0
+let score = Number.parseInt(localStorage.getItem('score')) || 0
+let clueId = '';
+
 
 window.addEventListener('DOMContentLoaded', event => {
+    setClueElements(JSON.parse(localStorage.getItem('clue')) || null)
+    document.getElementById("score").innerHTML = `${score}`
+
 
     document
         .getElementById('use-promise')
@@ -46,6 +51,24 @@ window.addEventListener('DOMContentLoaded', event => {
                 document.getElementById("score").innerHTML = `${score}`
                 answer.classList.remove("is-hidden")
                 event.target.classList.add("is-hidden")
+                localStorage.setItem('score', score)
+            }
+        })
+    document
+        .getElementById('delete-promise')
+        .addEventListener('click', event => {
+            deleteClueFromPromise(clueId).then(response => {
+                console.log(response)
+            });
+        })
+    document
+        .getElementById('delete-async')
+        .addEventListener('click', async event => {
+            try {
+                let clue = await deleteClueFromAsyncFunction(clueId)
+                console.log(clue);
+            } catch (e) {
+                console.log(e)
             }
         })
 })
@@ -53,7 +76,12 @@ window.addEventListener('DOMContentLoaded', event => {
 
 
 function setClueElements(clue) {
+
+    if(clue === null) {
+        return
+    }
     console.log(clue.answer)
+
     document
         .getElementById('question').innerHTML = clue.question
     document
@@ -72,4 +100,6 @@ function setClueElements(clue) {
     document.getElementById("check-response").classList.remove("is-hidden")
     document.getElementById("player-response").value = ""
     document.getElementById("answer").classList.add("is-hidden")
+    localStorage.setItem('clue', JSON.stringify(clue))
+    clueId = clue.id;
 }
