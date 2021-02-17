@@ -19,6 +19,10 @@ body {
     margin: 1.25em 0;
 }
 
+.is-hidden {
+    display: none;
+}
+
 #value {
     font-size: 1.25em;
     margin: 1.25em 0;
