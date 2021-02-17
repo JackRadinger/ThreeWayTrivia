@@ -1,5 +1,6 @@
 import {getClue as getClueFromPromise} from './promise-version.js'
 import {getClue as getClueFromAsyncFunction} from './async-await-version.js'
+import {getClue as getClueFromCallback} from './callback-version.js'
 
 window.addEventListener('DOMContentLoaded', event => {
     document
@@ -20,7 +21,20 @@ window.addEventListener('DOMContentLoaded', event => {
 
             }
         })
+    document
+        .getElementById('use-callback')
+        .addEventListener('click', event => {
+            getClueFromCallback((status, clue) => {
+                if(status === null){
+                    setClueElements(clue)
+                } else {
+                    console.error(status)
+                }
+            })
+        })
 })
+
+
 
 function setClueElements(clue) {
     document
