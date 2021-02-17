@@ -5,7 +5,7 @@ import {getClue as getClueFromCallback} from './callback-version.js'
 let score = 0
 
 window.addEventListener('DOMContentLoaded', event => {
-    
+
     document
         .getElementById('use-promise')
         .addEventListener('click', event => {
