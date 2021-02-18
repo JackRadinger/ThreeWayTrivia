@@ -1,6 +1,6 @@
-import {getClue as getClueFromPromise, deleteClue as deleteClueFromPromise} from './promise-version.js'
+import {getClue as getClueFromPromise, deleteClue as deleteClueFromPromise, postClue as postClueFromPromise} from './promise-version.js'
 import {getClue as getClueFromAsyncFunction, deleteClue as deleteClueFromAsyncFunction} from './async-await-version.js'
-import {getClue as getClueFromCallback} from './callback-version.js'
+import {getClue as getClueFromCallback, deleteClue as deleteClueFromCallback} from './callback-version.js'
 
 let score = Number.parseInt(localStorage.getItem('score')) || 0
 let clueId = '';
@@ -70,6 +70,33 @@ window.addEventListener('DOMContentLoaded', event => {
             } catch (e) {
                 console.log(e)
             }
+        })
+
+    document
+        .getElementById('delete-callback')
+        .addEventListener('click', event => {
+            deleteClueFromCallback((status, clue) => {
+                if(status === null) {
+                    console.log(clue)
+                } else {
+                    console.error(status)
+                }
+            }, clueId)
+        })
+
+    document
+        .getElementById('submit-promise')
+        .addEventListener("click", event => {
+            event.preventDefault()
+            let newClue = {
+                question: document.getElementById("new-question-text").value,
+                answer: document.getElementById("new-question-answer").value,
+                value: Number.parseInt(document.getElementById("new-question-value").value),
+                categoryId: 1
+            }
+            postClueFromPromise(newClue).then(response => {
+                console.log(response)
+            })
         })
 })
 

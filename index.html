@@ -29,6 +29,19 @@
             <button id="check-response" class="pure-button is-hidden">Check response</button>
             <div id="answer" class="is-hidden"></div>
         </div>
+        <div>
+            <form id="new-question-form" class="pure-form pure-form-stacked">
+                <label for="new-question-text">Question: </label>
+                <textarea id="new-question-text"></textarea>
+                <label for="new-question-answer">Answer: </label>
+                <textarea id="new-question-answer"></textarea>
+                <label for="new-question-value">Value: </label>
+                <input type="number" id="new-question-value"/>
+                <button id="submit-promise" type="submit" class="pure-button">Submit w/ Promise</button>
+                <button id="submit-async" type="submit" class="pure-button">Submit w/ Async</button>
+                <button id="submit-callback" type="submit" class="pure-button">Submit w/ Callback (eww)</button>
+            </form>
+        </div>
     </main>
 </body>
 </html>
